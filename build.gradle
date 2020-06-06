@@ -1,7 +1,10 @@
 plugins {
     id 'java'
     id 'idea'
+    id 'checkstyle'
+    id 'pmd'
 }
+
 
 group 'com.bistros'
 version '1.0-SNAPSHOT'
@@ -16,4 +19,19 @@ repositories {
 
 dependencies {
     implementation("junit:junit:4.13")
+}
+
+// checkstyle 8.32 를 기본으로 해서 변경  ( https://checkstyle.sourceforge.io/releasenotes.html#Release_8.32 )
+checkstyle {
+    toolVersion = '8.32'
+    ignoreFailures = true
+    configFile = rootProject.file('config/checkstyle/google_checks.xml')
+    maxErrors = 0
+    maxWarnings = 0
+}
+
+pmd {
+    toolVersion = '6.24.0'
+    ignoreFailures = true
+    ruleSetFiles = rootProject.files('config/pmd/all-java.xml')
 }
