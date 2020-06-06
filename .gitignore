@@ -1,0 +1,11 @@
+### default ###
+.gradle
+build/
+
+### IntelliJ IDEA ###
+bin
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
