@@ -24,7 +24,7 @@ dependencies {
 // checkstyle 8.32 를 기본으로 해서 변경  ( https://checkstyle.sourceforge.io/releasenotes.html#Release_8.32 )
 checkstyle {
     toolVersion = '8.32'
-    ignoreFailures = true
+    ignoreFailures = false
     configFile = rootProject.file('config/checkstyle/google_checks.xml')
     maxErrors = 0
     maxWarnings = 0
@@ -32,6 +32,7 @@ checkstyle {
 
 pmd {
     toolVersion = '6.24.0'
-    ignoreFailures = true
+    ignoreFailures = false
+    rulePriority = 2
     ruleSetFiles = rootProject.files('config/pmd/all-java.xml')
 }
