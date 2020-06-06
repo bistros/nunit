@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+group 'com.bistros'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("junit:junit:4.13")
+}
