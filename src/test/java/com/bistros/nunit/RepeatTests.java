@@ -2,6 +2,7 @@ package com.bistros.nunit;
 
 import com.bistros.nunit.annotation.Repeat;
 import com.bistros.nunit.runner.RepeatRunner;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
@@ -44,6 +45,25 @@ public class RepeatTests {
         Result result = runner.run(InnerRepeatTest2.class);
         assertEquals(0, result.getIgnoreCount());
         assertEquals(1, result.getRunCount());
+    }
+
+
+    @RunWith(RepeatRunner.class)
+    public static class InnerRepeatIgnoreAndRepeat {
+        @Test
+        @Ignore
+        @Repeat(5)
+        public void testRunIgnoreTestWithRepeat() {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void expectIgnoreCount1() {
+        JUnitCore runner = new JUnitCore();
+        Result result = runner.run(InnerRepeatIgnoreAndRepeat.class);
+        assertEquals(1, result.getIgnoreCount());
+        assertEquals(0, result.getRunCount());
     }
 
 }
