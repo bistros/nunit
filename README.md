@@ -2,6 +2,12 @@
 
 [![Build Status](https://travis-ci.com/bistros/nunit.svg?branch=develop)](https://travis-ci.com/bistros/nunit)
 
+## NJunit Compatibility
+
+| NJunit | JUnit |
+| ------ | ------ |
+| 1.0.0 | JUnit 4.13 |
+
  
 ### 개발 환경
 1. 환경 설정
@@ -12,7 +18,7 @@
     ```
 1. Test With Checkstyle, PMD
     ```
-    ./gradlew test 
+    ./gradlew check 
     ```
 ### Release 
 1. WIP
