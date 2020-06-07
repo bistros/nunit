@@ -10,7 +10,7 @@ import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
 
-import java.util.Optional;
+import static java.util.Optional.ofNullable;
 
 public class RepeatRunner extends BlockJUnit4ClassRunner {
 
@@ -31,17 +31,25 @@ public class RepeatRunner extends BlockJUnit4ClassRunner {
     private void repeatableChild(Description description,
         FrameworkMethod method, RunNotifier notifier) {
 
-        int repeat = Optional.ofNullable(method.getAnnotation(Repeat.class))
-            .map(Repeat::value).orElse(1);
-        for (int i = 0; i < repeat; i++) {
+        int repeat = ofNullable(method.getAnnotation(Repeat.class))
+            .map(Repeat::value).map(c -> Math.max(1, c)).orElse(1);
+
+        for (int seq = 0; seq < repeat; seq++) {
             Statement statement = new Statement() {
                 @Override
                 public void evaluate() throws Throwable {
                     methodBlock(method).evaluate();
                 }
             };
-            runLeaf(statement, description, notifier);
+            Description desc = (repeat <= 1) ? description : createDescriptionOrder(method, seq);
+            runLeaf(statement, desc, notifier);
         }
+    }
+
+    private Description createDescriptionOrder(FrameworkMethod method, int index) {
+        String name = testName(method) + "#" + (index + 1);
+        return Description.createTestDescription(
+            getTestClass().getJavaClass(), name, method.getAnnotations());
     }
 
     /**
@@ -59,5 +67,4 @@ public class RepeatRunner extends BlockJUnit4ClassRunner {
             repeatableChild(description, method, notifier);
         }
     }
-
 }
