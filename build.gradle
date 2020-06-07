@@ -36,3 +36,9 @@ pmd {
     rulePriority = 2
     ruleSetFiles = rootProject.files('config/pmd/all-java.xml')
 }
+
+test {
+    reports {
+        html.enabled = true
+    }
+}
