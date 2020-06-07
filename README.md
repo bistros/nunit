@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.com/bistros/nunit.svg?branch=develop)](https://travis-ci.com/bistros/nunit)
 
-## NJunit Compatibility
+## NUnit Compatibility
 
-| NJunit | JUnit |
+| NUnit | JUnit |
 | ------ | ------ |
 | 1.0.0 | JUnit 4.13 |
 
