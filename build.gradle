@@ -3,6 +3,7 @@ plugins {
     id 'idea'
     id 'checkstyle'
     id 'pmd'
+    id "nebula.facet" version "7.0.9" //v7.0.0, nebula-project-plugin supports only Gradle 5.0+
 }
 
 
@@ -41,4 +42,23 @@ test {
     reports {
         html.enabled = true
     }
+}
+
+facets {
+    integTest
+}
+
+task combineTestReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/combined")
+    reportOn test
+    reportOn integTest
+}
+
+check.dependsOn combineTestReport
+
+gradle.buildFinished {
+    println "====Report List===="
+    println "Checkstyle: " + checkstyleMain.reports.getHtml().destination.toURI()
+    println "Pmd       : " + pmdMain.reports.html.destination.toURI()
+    println "Test      : " + combineTestReport.destinationDir.toURI()
 }
