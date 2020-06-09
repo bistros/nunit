@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'checkstyle'
+    id 'pmd'
+    id "nebula.facet" version "7.0.9" //v7.0.0, nebula-project-plugin supports only Gradle 5.0+
+}
+
+
+group 'com.bistros'
+version '1.0'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("junit:junit:4.13")
+}
+
+// checkstyle 8.32 를 기본으로 해서 변경  ( https://checkstyle.sourceforge.io/releasenotes.html#Release_8.32 )
+checkstyle {
+    toolVersion = '8.32'
+    ignoreFailures = false
+    configFile = rootProject.file('config/checkstyle/google_checks.xml')
+    maxErrors = 0
+    maxWarnings = 0
+}
+
+pmd {
+    toolVersion = '6.24.0'
+    ignoreFailures = false
+    rulePriority = 2
+    ruleSetFiles = rootProject.files('config/pmd/all-java.xml')
+}
+
+test {
+    reports {
+        html.enabled = true
+    }
+}
+
+facets {
+    integTest
+}
+
+task combineTestReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/combined")
+    reportOn test
+    reportOn integTest
+}
+
+check.dependsOn combineTestReport
+
+gradle.buildFinished {
+    println "====Report List===="
+    println "Checkstyle: " + checkstyleMain.reports.getHtml().destination.toURI()
+    println "Pmd       : " + pmdMain.reports.html.destination.toURI()
+    println "Test      : " + combineTestReport.destinationDir.toURI()
+}
