@@ -20,5 +20,11 @@
     ```
     ./gradlew check 
     ```
+### 산출 문서 
+* [작업 기록](HISTORY.md)
+* [Annotaion API 정보](API.md)  
+
 ### Release 
-1. WIP
+| Version | Release Date | End Of Support |
+| ----- | ----- | ----- |
+| v1.0 | 2020.06.10 | ? |
